@@ -5,8 +5,8 @@
      <input type="text" v-model="movieName">
    </form>
    <div class="row">
-    <Results class="col"/>
-    <Details class="col"/>
+    <Results :movieData="movies" v-on:viewDetails="setActiveMovie" class="col"/>
+    <Details :movieDetails="activeMovie" class="col"/>
    </div>
   </div>
 </template>
@@ -19,12 +19,22 @@ export default {
   name: "home",
   data() {
     return {
-      movieName: ""
+      movieName: "",
+      activeMovie: {}
     };
+  },
+  computed: {
+    movies() {
+      return this.$store.state.movies;
+    }
   },
   methods: {
     search() {
+      debugger;
       this.$store.dispatch("search", this.movieName);
+    },
+    setActiveMovie(movie) {
+      this.activeMovie = movie;
     }
   },
   components: {
